@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MRI Scan Time Calculator</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; max-width: 600px; }
+    input { width: 50px; margin: 5px; }
+    label { display: block; margin-top: 10px; }
+    .result { margin-top: 20px; font-weight: bold; }
+    .ad { margin: 30px 0; background: #f9f9f9; border: 1px dashed #ccc; padding: 15px; text-align: center; color: #666; }
+  </style>
+</head>
+<body>
+  <h1>MRI Technologist Scan Time Calculator</h1>
+
+  <div class="ad">
+    <!-- Ad Block Placeholder 1 -->
+    AD SPACE 1 — Insert AdSense code here later
+  </div>
+
+  <label>
+    Max Allowed Scan Time (minutes):
+    <input type="number" id="maxTime" value="60">
+  </label>
+
+  <form id="scanForm">
+    <label>T1 (5 min each): <input type="number" id="t1" value="0"></label>
+    <label>T2 (6 min each): <input type="number" id="t2" value="0"></label>
+    <label>FLAIR (7 min each): <input type="number" id="flair" value="0"></label>
+    <label>DWI (4 min each): <input type="number" id="dwi" value="0"></label>
+    <label>SWI (6 min each): <input type="number" id="swi" value="0"></label>
+
+    <button type="button" onclick="calculate()">Calculate</button>
+  </form>
+
+  <div class="result" id="result"></div>
+
+  <div class="ad">
+    <!-- Ad Block Placeholder 2 -->
+    AD SPACE 2 — Insert AdSense code here later
+  </div>
+
+  <script>
+    const durations = {
+      t1: 5,
+      t2: 6,
+      flair: 7,
+      dwi: 4,
+      swi: 6
+    };
+
+    function calculate() {
+      const maxTime = parseInt(document.getElementById('maxTime').value);
+      let totalUsed = 0;
+
+      for (let seq in durations) {
+        const count = parseInt(document.getElementById(seq).value) || 0;
+        totalUsed += count * durations[seq];
+      }
+
+      const remaining = maxTime - totalUsed;
+      const resultDiv = document.getElementById('result');
+
+      resultDiv.innerHTML = `
+        Total Scan Time Used: ${totalUsed} minutes<br>
+        Remaining Time: ${remaining >= 0 ? remaining : 0} minutes<br>
+        ${remaining < 0 ? "<span style='color:red;'>Over time limit!</span>" : ""}
+      `;
+    }
+  </script>
+</body>
+</html>
